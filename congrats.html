@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Congratulations on Your CPE Exam!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #FFC0CB; /* Pink background */
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Prevent scrolling */
+            color: white; /* White text */
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: white; /* White container background */
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transform: scale(0);
+            animation: popIn 0.5s forwards, shake 0.8s ease-in-out 1s;
+        }
+        @keyframes popIn {
+            0% { transform: scale(0); }
+            100% { transform: scale(1); }
+        }
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-3px); }
+            100% { transform: translateX(0); }
+        }
+        h1 {
+            color: pink;
+        }
+        p {
+            color: black;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+        #confetti {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+        .by-jb {
+            color: black;
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Congratulations!</h1>
+        <p>congrats on your CPE exam!</p>
+        <p>Wishing you a fantastic day ahead filled with joy and success!</p>
+        <p>To all Blissphere</p>
+    </div>
+    <canvas id="confetti"></canvas>
+    <div class="by-jb">by jb</div>
+    <script>
+        function randomInRange(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+
+        const canvas = document.getElementById('confetti');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const confettiColors = ['#f44336', '#2196f3', '#ffeb3b', '#4caf50', '#ff9800'];
+
+        function createConfetti() {
+            return {
+                x: randomInRange(0, canvas.width),
+                y: -10,
+                radius: randomInRange(5, 8),
+                color: confettiColors[Math.floor(Math.random() * confettiColors.length)],
+                speed: randomInRange(2, 4),
+                tilt: Math.random() * Math.PI
+            };
+        }
+
+        const confetti = [];
+        const confettiCount = 250; // Increased confetti count for more excitement
+
+        for (let i = 0; i < confettiCount; i++) {
+            confetti.push(createConfetti());
+        }
+
+        function drawConfetti() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            confetti.forEach(piece => {
+                ctx.beginPath();
+                ctx.arc(piece.x, piece.y, piece.radius, piece.tilt, piece.tilt + Math.PI / 2);
+                ctx.lineTo(piece.x, piece.y);
+                ctx.fillStyle = piece.color;
+                ctx.fill();
+                ctx.closePath();
+                piece.y += piece.speed;
+                if (piece.y > canvas.height) {
+                    piece.y = -10;
+                    piece.x = randomInRange(0, canvas.width);
+                }
+            });
+            requestAnimationFrame(drawConfetti);
+        }
+
+        drawConfetti();
+    </script>
+</body>
+</html>
