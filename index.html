@@ -55,8 +55,10 @@
 <body>
     <div class="container">
         <h1>Congratulations!</h1>
-        <p>congrats on your CPE exam!</p>
+        <p>Congratulations on completing your CPE exam!</p>
         <p>Wishing you a fantastic day ahead filled with joy and success!</p>
+         <p>
+No matter what the result, always think positively😁😃💯</p>
         <p>To all Blissers</p>
     </div>
     <canvas id="confetti"></canvas>
@@ -76,8 +78,8 @@
 
         function createConfetti() {
             return {
-                x: randomInRange(0, canvas.width),
-                y: -10,
+                x: randomInRange(-10, canvas.width + 10), // Spread horizontally across the canvas
+                y: randomInRange(-50, -10), // Start from above the canvas
                 radius: randomInRange(5, 8),
                 color: confettiColors[Math.floor(Math.random() * confettiColors.length)],
                 speed: randomInRange(2, 4),
@@ -104,7 +106,7 @@
                 piece.y += piece.speed;
                 if (piece.y > canvas.height) {
                     piece.y = -10;
-                    piece.x = randomInRange(0, canvas.width);
+                    piece.x = randomInRange(-10, canvas.width + 10); // Spread horizontally across the canvas
                 }
             });
             requestAnimationFrame(drawConfetti);
